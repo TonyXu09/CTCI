@@ -380,7 +380,7 @@ class Chapter1 {
 
         rotateImage(matrix, 4);
 
-        printMatrix(matrix, 4);
+        printMatrix(matrix, 4, 4);
 
         System.out.println();
 
@@ -393,12 +393,12 @@ class Chapter1 {
         };
 
         rotateImage(matrix2, 5);
-        printMatrix(matrix2, 5);
+        printMatrix(matrix2, 5, 5);
 
     }
 
-    private static void printMatrix(int[][] matrix, int n) {
-        for (int i = 0; i < n; i++) {
+    private static void printMatrix(int[][] matrix, int m, int n) {
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 System.out.print(matrix[i][j]);
                 System.out.print(' ');
@@ -412,9 +412,76 @@ class Chapter1 {
     and column are set to 0.
      */
 
+    private static void zeroMatrix(int[][] matrix, int m, int n) {
+        boolean[] hasSeenZeroRow = new boolean[m];
+        boolean[] hasSeenZeroColumn = new boolean[n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int value = matrix[i][j];
+                if (value == 0) {
+                    hasSeenZeroRow[i] = true;
+                    hasSeenZeroColumn[i] = true;
+                }
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (hasSeenZeroRow[i] || hasSeenZeroColumn[j]) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    static void testZeroMatrix() {
+        int[][] matrix = new int[][]{
+                {0, 2, 3, 4, 5},
+                {6, 7, 8, 9, 10},
+                {11, 12, 0, 14, 15},
+                {16, 17, 18, 19, 20},
+                {21, 22, 23, 24, 25}
+        };
+
+        zeroMatrix(matrix, 5, 5);
+        printMatrix(matrix, 5, 5);
+    }
+
     /*
     String Rotation:Assumeyou have a method isSubstringwhich checks if one word is a substring
     of another. Given two strings, sl and s2, write code to check if s2 is a rotation of sl
     using only one call to isSubstring (e.g.,"waterbottle" is a rotation of"erbottlewat").
      */
+
+    //waterbottlewaterbottle
+    //erbottlewat
+
+    // if s2 is a rotation of s1, concactanating it and then calling isSubstring must be true
+    private static boolean isRotation(String s1, String s2) {
+        if(s1.length() != s2.length()){
+            return false;
+        }
+
+        String s3 = s1.concat(s1);
+        return isSubString(s3, s2);
+
+    }
+
+    // is s2 a substring of s1
+    private static boolean isSubString(String s1, String s2) {
+     return s1.contains(s2);
+    }
+
+    static void testIsRotation(){
+        System.out.println();
+
+        String s1 = "waterbottle";
+        String s2 = "erbottlewat";
+
+        assert(isRotation(s1, s2));
+
+        System.out.println("testIsRotation passed");
+
+    }
 }

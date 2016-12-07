@@ -14,5 +14,8 @@ public class MainClass {
         Chapter1.testIsOneAway();
         Chapter1.testStringCompression();
         Chapter1.testRotateImage();
+        System.out.println();
+        Chapter1.testZeroMatrix();
+        Chapter1.testIsRotation();
     }
 }
