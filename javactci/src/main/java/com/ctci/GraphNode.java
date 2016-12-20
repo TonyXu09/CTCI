@@ -7,4 +7,5 @@ package com.ctci;
 public class GraphNode {
     public int value;
     public GraphNode[] neighbors;
+    public boolean visisted;
 }

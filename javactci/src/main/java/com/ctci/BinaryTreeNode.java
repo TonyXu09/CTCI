@@ -73,6 +73,7 @@ public class BinaryTreeNode {
         }
         inOrderTraversal(root.left);
         System.out.print(root.value);
+        System.out.print(" ");
         inOrderTraversal(root.right);
     }
 
@@ -82,6 +83,7 @@ public class BinaryTreeNode {
         }
 
         System.out.print(root.value);
+        System.out.print(" ");
         preOrderTraversal(root.left);
         preOrderTraversal(root.right);
     }
@@ -94,6 +96,7 @@ public class BinaryTreeNode {
         postOrderTraversal(root.left);
         postOrderTraversal(root.right);
         System.out.print(root.value);
+        System.out.print(" ");
     }
 }
 

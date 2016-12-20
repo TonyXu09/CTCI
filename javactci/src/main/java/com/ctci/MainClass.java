@@ -4,7 +4,8 @@ public class MainClass {
 
     public static void main(String[] arg){
 //        TestChapter1();
-        TestChapter2();
+//        TestChapter2();
+        TestChapter4();
     }
 
     public static void TestChapter1() {
@@ -32,5 +33,10 @@ public class MainClass {
         Chapter2.testIsPalindrome();
         Chapter2.testDoesIntersect();
         Chapter2.testFindCircularLinkedListStart();
+    }
+
+    public static void TestChapter4(){
+        Chapter4.TestBuildMinimalTree();
+        Chapter4.testListOfDepths();
     }
 }

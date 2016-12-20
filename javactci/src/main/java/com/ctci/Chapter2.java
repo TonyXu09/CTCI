@@ -64,7 +64,7 @@ class Chapter2 {
         System.out.println();
     }
 
-    private static void printLinkedList(LinkedListNode head) {
+    static void printLinkedList(LinkedListNode head) {
         while (head != null) {
             System.out.print(head.value);
 
