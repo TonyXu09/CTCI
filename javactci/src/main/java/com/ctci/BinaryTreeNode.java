@@ -98,6 +98,14 @@ public class BinaryTreeNode {
         System.out.print(root.value);
         System.out.print(" ");
     }
+
+    public static boolean isLeaf(BinaryTreeNode node){
+        if(node == null){
+            return false;
+        }
+
+        return ((node.left == null) && (node.right == null));
+    }
 }
 
 

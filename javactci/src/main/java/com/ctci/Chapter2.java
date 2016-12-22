@@ -268,7 +268,7 @@ class Chapter2 {
     private static LinkedListNode reverseLinkedList(LinkedListNode head) {
         LinkedListNode curr = head;
         LinkedListNode prev = null;
-        LinkedListNode next = null;
+        LinkedListNode next;
 
         while (curr != null) {
             next = curr.next;
@@ -280,6 +280,7 @@ class Chapter2 {
         return prev;
 
     }
+
 
     static void testReverseLinkedList() {
         LinkedListNode nodeA = new LinkedListNode(1);

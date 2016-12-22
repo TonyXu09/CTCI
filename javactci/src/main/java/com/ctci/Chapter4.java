@@ -1,6 +1,9 @@
 package com.ctci;
 
 import java.util.ArrayList;
+import java.util.Queue;
+
+import javax.swing.tree.TreeNode;
 
 /**
  * Created by tonyxu on 12/13/16.
@@ -12,6 +15,55 @@ public class Chapter4 {
 * 4.1 Route Between Nodes: Given a directed graph, design an algorithm to find out
 * whether there is a route between two nodes.
  */
+
+    // Start a BFS from node a.
+    // Start a BFS from node b.
+    // If they meet, then there is a route.
+
+    private static boolean isThereRoute(GraphNode a, GraphNode b) {
+        if (a == null || b == null) {
+            return false;
+        }
+
+        if (a == b) {
+            return true;
+        }
+
+        Queue<GraphNode> queueA = new java.util.LinkedList<GraphNode>();
+        Queue<GraphNode> queueB = new java.util.LinkedList<GraphNode>();
+        queueA.offer(a);
+        queueB.offer(b);
+        a.visisted = true;
+        b.visisted = true;
+
+        while (!queueA.isEmpty() && !queueB.isEmpty()) {
+            GraphNode ga = queueA.remove();
+            GraphNode gb = queueB.remove();
+
+            for (int i = 0; i < ga.neighbors.length; i++) {
+                // the check should be visited by gb
+                if (!ga.neighbors[i].visisted) {
+                    queueA.offer(ga.neighbors[i]);
+                    ga.visisted = true;
+                } else {
+                    return true;
+                }
+            }
+
+            for (int i = 0; i < gb.neighbors.length; i++) {
+                // The check should be visited by ga
+                if (!gb.neighbors[i].visisted) {
+                    queueB.offer(gb.neighbors[i]);
+                    gb.visisted = true;
+                } else {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 
     /*
     * 4.2 Minimal Tree: Given a sorted (increasing order) array with unique integer elements,
@@ -206,6 +258,17 @@ public class Chapter4 {
     *
      */
 
+    // For nodes a and b, find the depth of both nodes.
+    // for the deeper one, keep going up by calling parent until they are the same depth
+    // Then just keep moving up by calling the nodes parents until we hit a common node.
+    // IF they hit null, there is no common node.
+
+    // If there is no link to parent.
+    // Start at the root, check if a, b are both on the left/right side.
+    // If they are on opposite sides, then it is the common ancestor
+    // If they are on the same side, recursively call down on that side.
+
+
     /*
     * 4.9 BST Sequences. A binary search tree was created by traversing through an array from left
     * to right and inserting each element. Given a binary search tree with distinct elements, print
@@ -219,6 +282,7 @@ public class Chapter4 {
     *
      */
 
+
     /*
     * 4.10 Check Subtree: T1 and T2 are two very large binary trees, with T1 much bigger than T2.
     * Create an algorithm to determine if T2 is a subtree of T1.
@@ -228,6 +292,87 @@ public class Chapter4 {
     *
      */
 
+    // Algorithm: Go through the nodes of T1, if we find a node N that is equal to the root of T2,
+    // Then we compare T1 from node N to T2. Will have to visit ever node.
+
+    private static boolean isSubTree(BinaryTreeNode t1, BinaryTreeNode t2) {
+        if (t1 == null || t2 == null) {
+            return false;
+        }
+
+        if (t1 == t2) {
+            boolean result = compareTrees(t1, t2);
+            if (result) {
+                return true;
+            }
+        }
+
+        return isSubTree(t1.left, t2) || isSubTree(t1.right, t2);
+    }
+
+    private static boolean compareTrees(BinaryTreeNode t1, BinaryTreeNode t2) {
+        if (t1 == null && t2 == null) {
+            return true;
+        }
+
+        if (t1 == null || t2 == null) {
+            return false;
+        }
+
+        if (t1 != t2) {
+            return false;
+        }
+
+        return compareTrees(t1.left, t2.left) && compareTrees(t1.right, t2.right);
+    }
+
+    static void testCompareTrees() {
+        int[] a = new int[]{1, 2, 3, 4, 5, 6, 7};
+        BinaryTreeNode tree = buildMinimalTree(a, 0, 6);
+        BinaryTreeNode.inOrderTraversal(tree);
+        System.out.println();
+
+        BinaryTreeNode tree2 = buildMinimalTree(a, 0, 6);
+        BinaryTreeNode.inOrderTraversal(tree2);
+        System.out.println();
+
+        assert compareTrees(tree, tree2);
+
+        int[] b = new int[]{1, 2, 3, 8, 5, 6, 7};
+        BinaryTreeNode tree3 = buildMinimalTree(b, 0, 6);
+        BinaryTreeNode.inOrderTraversal(tree3);
+        System.out.println();
+
+        assert !compareTrees(tree, tree3);
+
+        int[] c = new int[]{1, 2, 3, 8, 5, 6, 7, 9};
+        BinaryTreeNode tree4 = buildMinimalTree(c, 0, 7);
+        BinaryTreeNode.inOrderTraversal(tree4);
+        System.out.println();
+
+        assert !compareTrees(tree3, tree4);
+
+        System.out.println("Test CompareTrees complete \n");
+    }
+
+    static void testIsSubTree() {
+        int[] b = new int[]{1, 2, 3, 8, 5, 6, 7};
+        BinaryTreeNode tree3 = buildMinimalTree(b, 0, 6);
+        BinaryTreeNode.inOrderTraversal(tree3);
+        System.out.println();
+
+        int[] c = new int[]{1, 2, 3, 8, 5, 6, 7, 9, 10, 15, 23, 18};
+        BinaryTreeNode tree4 = buildMinimalTree(c, 0, 7);
+        BinaryTreeNode.inOrderTraversal(tree4);
+        System.out.println();
+
+        assert isSubTree(tree4, tree3);
+
+        System.out.println("Test IsSubTree complete \n");
+
+    }
+
+
     /*
     * 4.11 Random Node: You are implementing a binary tree class from scratch, which, in addition to
     * insert, find, and delete, has a method getRandomNode() which returns a random node from
@@ -236,11 +381,90 @@ public class Chapter4 {
     *
      */
 
+    // I would keep the total # of nodes in a variable.
+    // So every time we insert, we add one, every time we delete we remove one.
+    // For getRandomNode, I would get a random number from [0, total), say x
+    // Run an inOrder traversal x times, then return that value.
+    // Not optimal
+
+    // More optimal
+    // Each node need to know the sie of the left and right side.
+    // At every level, we roll a random number, say the left has 3 nodes, and right has 4 nodes,
+    // so there are 8 choices total. 1 + 3 + 4 = 8. We roll a number from [0, 8)
+    // if its between [0, 3), we go left, if 3, stay, if [4, 8), go right.
+    // And we can keep this random number as we traverse down the tree.
+    // Say we rolled 2, and then we go left.
+    // 2 means the second node, so it is the direct left child.
+
     /*
-    * 4.12 Paths with Sum: You are given a binary tree in which each node contains an integeter value
-    * (which might be positive or negative). Design an algorithm to count the nubmer of paths that
+    * 4.12 Paths with Sum: You are given a binary tree in which each node contains an integer value
+    * (which might be positive or negative). Design an algorithm to count the number of paths that
     * sum to a given value. The path does not need to start or end at the root or a leaf, but it must
     * go downwards (travelling only from parent nodes to child nodes).
     *
      */
+
+    // go down the tree, at each node, keep a list of the possible sums that ends at that node.
+
+    private static int numPathsThatAddToSum(BinaryTreeNode node, int desired, ArrayList<Integer> possibleSums) {
+        int total = 0;
+
+        if (node == null) {
+            return 0;
+        }
+
+        if (node.value == desired) {
+            total++;
+        }
+
+        for(int i = 0; i < possibleSums.size(); i++){
+            int newValue = possibleSums.get(i) + node.value;
+            if(newValue == desired){
+                total++;
+            }
+            possibleSums.set(i, newValue);
+        }
+
+        possibleSums.add(node.value);
+
+        return total + numPathsThatAddToSum(node.left, desired, new ArrayList<Integer>(possibleSums)) +
+                numPathsThatAddToSum(node.right, desired, new ArrayList<Integer>(possibleSums));
+    }
+
+    static void testNumPathsThatAddToSum() {
+        BinaryTreeNode node1 = new BinaryTreeNode();
+        node1.value = 3;
+        BinaryTreeNode node2 = new BinaryTreeNode();
+        node2.value = 1;
+        BinaryTreeNode node3 = new BinaryTreeNode();
+        node3.value = 8;
+        BinaryTreeNode node4 = new BinaryTreeNode();
+        node4.value = -2;
+        BinaryTreeNode node5 = new BinaryTreeNode();
+        node5.value = -7;
+        BinaryTreeNode node6 = new BinaryTreeNode();
+        node6.value = -5;
+
+        node1.left = node2;
+        node1.right = node3;
+        node2.left = null;
+        node2.right = null;
+        node3.left = node4;
+        node3.right = node5;
+        node4.left = node6;
+        node4.right= null;
+        node5.left= null;
+        node5.right = null;
+        node6.left = null;
+        node6.right = null;
+
+        BinaryTreeNode.inOrderTraversal(node1);
+
+        int result = numPathsThatAddToSum(node1, 4, new ArrayList<Integer>());
+        System.out.println();
+        System.out.println(result);
+
+        System.out.println("\n testNumPathsThatAddToSum passed \n");
+    }
+
 }

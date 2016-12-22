@@ -93,7 +93,7 @@ public class Graph {
         queue.offer(node);
         node.visisted = true;
 
-        while (queue != null) {
+        while (!queue.isEmpty()) {
             GraphNode gn = queue.remove();
             System.out.print(gn.value);
 

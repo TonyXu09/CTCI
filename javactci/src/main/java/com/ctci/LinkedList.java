@@ -31,7 +31,7 @@ public class LinkedList {
         LinkedListNode curr = head;
 
         while (curr.next != null) {
-            if(curr.next.value == value){
+            if (curr.next.value == value) {
                 curr.next = curr.next.next;
                 return head;
             }
@@ -39,6 +39,24 @@ public class LinkedList {
         }
 
         return head;
+    }
+
+    public static LinkedListNode reverseLinkedList(LinkedListNode head) {
+        if (head == null) {
+            return null;
+        }
+
+        LinkedListNode prev = null;
+        LinkedListNode curr = head;
+
+        while(curr != null) {
+            LinkedListNode temp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = temp;
+        }
+
+        return prev;
     }
 
     // Runner Technique: Have 2 nodes, 1 going faster than the other one by some amount, could be

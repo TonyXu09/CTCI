@@ -38,5 +38,8 @@ public class MainClass {
     public static void TestChapter4(){
         Chapter4.TestBuildMinimalTree();
         Chapter4.testListOfDepths();
+        Chapter4.testCompareTrees();
+        Chapter4.testIsSubTree();
+        Chapter4.testNumPathsThatAddToSum();
     }
 }
