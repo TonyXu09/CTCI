@@ -48,6 +48,9 @@ public class MainClass {
         Chapter10.testBinarySearch();
         Chapter10.testQuickSort();
         Chapter10.testMergeSort();
-
+        Chapter10.testMergeSortedArrays();
+        Chapter10.testSearchRotated();
+        Chapter10.testSearchListy();
+        Chapter10.testSparseSearch();
     }
 }
