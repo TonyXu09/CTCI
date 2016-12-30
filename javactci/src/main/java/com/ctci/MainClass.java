@@ -5,7 +5,8 @@ public class MainClass {
     public static void main(String[] arg){
 //        TestChapter1();
 //        TestChapter2();
-        TestChapter4();
+//        TestChapter4();
+        TestChapter10();
     }
 
     public static void TestChapter1() {
@@ -41,5 +42,12 @@ public class MainClass {
         Chapter4.testCompareTrees();
         Chapter4.testIsSubTree();
         Chapter4.testNumPathsThatAddToSum();
+    }
+
+    public static void TestChapter10() {
+        Chapter10.testBinarySearch();
+        Chapter10.testQuickSort();
+        Chapter10.testMergeSort();
+
     }
 }
